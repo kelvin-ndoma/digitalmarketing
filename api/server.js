@@ -3,9 +3,13 @@ const server = jsonServer.create();
 const router = jsonServer.router('db.json'); // Replace 'db.json' with your data file
 const middlewares = jsonServer.defaults();
 
-// Enable CORS for all routes (configure as needed)
+// Enable CORS for specific origin(s)
 server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  const allowedOrigins = ['http://localhost:3000']; // Add the origins you want to allow here
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
